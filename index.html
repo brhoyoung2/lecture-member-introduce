@@ -653,7 +653,9 @@ function renderDetail(){
       '<div class="row-edit" data-i="'+i+'">'+
         '<input class="edit-input mono" data-k="period" style="flex:0 0 150px" value="'+esc(c.period)+'" placeholder="연도">'+
         '<input class="edit-input" data-k="role" value="'+esc(c.role)+'" placeholder="경력">'+
-        '<button class="icon-btn" data-del="career" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6"/></svg></button>'+
+        '<button class="icon-btn" data-move="up" data-type="career" data-i="'+i+'" title="위로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8l-4 4h8z"/></svg></button>'+
+        '<button class="icon-btn" data-move="down" data-type="career" data-i="'+i+'" title="아래로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 16l4-4H8z"/></svg></button>'+
+        '<button class="icon-btn" data-del="career" data-type="career" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6"/></svg></button>'+
       '</div>'
     )).join('') + '</div><button class="add-row" id="addCareer">+ 경력 추가</button>';
   }else{
@@ -668,7 +670,9 @@ function renderDetail(){
     lecHtml = '<div id="lecEdit">'+ (ins.lectures||[]).map((l,i)=>(
       '<div class="row-edit" data-i="'+i+'">'+
         '<input class="edit-input" data-k="lec" value="'+esc(l)+'" placeholder="예) \'24 OO대학교 AI 특강">'+
-        '<button class="icon-btn" data-del="lec" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6"/></svg></button>'+
+        '<button class="icon-btn" data-move="up" data-type="lec" data-i="'+i+'" title="위로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8l-4 4h8z"/></svg></button>'+
+        '<button class="icon-btn" data-move="down" data-type="lec" data-i="'+i+'" title="아래로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 16l4-4H8z"/></svg></button>'+
+        '<button class="icon-btn" data-del="lec" data-type="lec" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6"/></svg></button>'+
       '</div>'
     )).join('') + '</div><button class="add-row" id="addLec">+ 강의경력 추가</button>';
   }else{
@@ -733,6 +737,25 @@ function bindDetailEvents(ins){
   const al = document.getElementById('addLec');
   if(al) al.addEventListener('click', ()=>{ ins.lectures.push(''); persist(); renderDetail(); const rows=document.querySelectorAll('#lecEdit .row-edit input'); if(rows.length) rows[rows.length-1].focus(); });
 
+  // move buttons
+  document.querySelectorAll('#detail [data-move]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const i = +b.dataset.i;
+      const dir = b.dataset.move;
+      const type = b.dataset.type;
+      const target = dir === 'up' ? i-1 : i+1;
+      if(target < 0) return;
+
+      if(type === 'career' && ins.career && target < ins.career.length){
+        [ins.career[i], ins.career[target]] = [ins.career[target], ins.career[i]];
+        persist(); renderDetail();
+      }
+      if(type === 'lec' && ins.lectures && target < ins.lectures.length){
+        [ins.lectures[i], ins.lectures[target]] = [ins.lectures[target], ins.lectures[i]];
+        persist(); renderDetail();
+      }
+    });
+  });
   // delete buttons
   document.querySelectorAll('#detail [data-del]').forEach(b=>{
     b.addEventListener('click', ()=>{

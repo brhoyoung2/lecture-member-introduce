@@ -1,0 +1,8 @@
+# Source photos — not used by the site (images are base64-embedded in index.html)
+*.png
+*.jpg
+*.jpeg
+
+# OS / editor
+.DS_Store
+Thumbs.db
