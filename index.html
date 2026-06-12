@@ -819,6 +819,15 @@ const STORAGE_KEY = 'tooning_training_data_v1';
 const PASSWORD = '0909';
 const clone = o => JSON.parse(JSON.stringify(o));
 
+/* ---------- Supabase (shared persistence) ---------- */
+const SB_URL = 'https://mllbsqnrvhvnqvxkpxof.supabase.co';
+const SB_KEY = 'sb_publishable_jIcIclh6P2smjMHYjBZbfg_MiEX185n';
+const SB_TABLE = '투닝교원연수_강사진';
+const SB_ROW = 'main';
+const SB_REST = SB_URL + '/rest/v1/' + encodeURIComponent(SB_TABLE);
+const SB_HEADERS = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+let sbReady = false;
+
 let state = { data: loadData(), editing:false, selectedId:null };
 if(!state.selectedId && state.data.instructors[0]) state.selectedId = state.data.instructors[0].id;
 
@@ -826,7 +835,40 @@ function loadData(){
   try{ const s = localStorage.getItem(STORAGE_KEY); if(s){ const d = JSON.parse(s); if(d && d.instructors) return d; } }catch(e){}
   return clone(DEFAULT_DATA);
 }
-function persist(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){} }
+let saveTimer;
+function persist(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveRemote, 700);   // debounced shared save
+}
+async function saveRemote(){
+  try{
+    const res = await fetch(SB_REST, {
+      method:'POST',
+      headers: Object.assign({}, SB_HEADERS, {'Prefer':'resolution=merge-duplicates,return=minimal'}),
+      body: JSON.stringify([{ id: SB_ROW, payload: state.data, updated_at: new Date().toISOString() }])
+    });
+    if(res.ok && state.editing && sbReady) toast('저장됨 · 모두에게 공유됩니다');
+  }catch(e){}
+}
+async function syncFromRemote(){
+  try{
+    const res = await fetch(SB_REST + '?id=eq.' + SB_ROW + '&select=payload', { headers: SB_HEADERS });
+    if(!res.ok) return;                                   // table not set up yet → keep local
+    sbReady = true;
+    const rows = await res.json();
+    if(rows && rows[0] && rows[0].payload && rows[0].payload.instructors){
+      if(state.editing) return;                           // don't clobber an in-progress edit
+      state.data = rows[0].payload;
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+      if(!state.data.instructors.some(i=>i.id===state.selectedId))
+        state.selectedId = state.data.instructors[0] ? state.data.instructors[0].id : null;
+      render();
+    } else {
+      saveRemote();                                       // empty DB → seed with current data
+    }
+  }catch(e){}
+}
 function uid(){ return 'ins_' + Math.random().toString(36).slice(2,8); }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function getSelected(){ return state.data.instructors.find(i=>i.id===state.selectedId) || state.data.instructors[0]; }
@@ -1293,6 +1335,7 @@ window.addEventListener('resize', syncHeader, {passive:true});
 document.getElementById('yr').textContent = new Date().getFullYear();
 render();
 syncHeader();
+syncFromRemote();   // pull latest shared data from Supabase (then keep in sync)
 </script>
 </body>
 </html>
