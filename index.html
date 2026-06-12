@@ -91,7 +91,7 @@
   /* ---------- Hero (full-screen video) ---------- */
   .hero{
     position:relative;min-height:100vh;min-height:100svh;
-    display:flex;flex-direction:column;justify-content:flex-end;
+    display:flex;flex-direction:column;justify-content:center;
     overflow:hidden;color:#fff;margin:0;max-width:none;
   }
   .hero-video{
@@ -100,16 +100,17 @@
   }
   .hero-scrim{
     position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(180deg,
-      rgba(12,10,28,.82) 0%,
-      rgba(12,10,28,.34) 20%,
-      rgba(12,10,28,0) 40%,
-      rgba(12,10,28,.52) 76%,
-      rgba(12,10,28,.94) 100%);
+    background:
+      radial-gradient(78% 56% at 50% 50%,rgba(12,10,28,.64) 0%,rgba(12,10,28,.28) 55%,rgba(12,10,28,0) 100%),
+      linear-gradient(180deg,
+        rgba(12,10,28,.80) 0%,
+        rgba(12,10,28,.30) 24%,
+        rgba(12,10,28,.20) 60%,
+        rgba(12,10,28,.88) 100%);
   }
   .hero-inner{
     position:relative;z-index:2;width:100%;max-width:1120px;
-    margin:0 auto;padding:0 28px 72px;text-align:center;
+    margin:0 auto;padding:40px 28px;text-align:center;
   }
   .eyebrow{
     font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
@@ -298,6 +299,41 @@
   .detail-toolbar .lbl{font-size:13px;font-weight:700;color:var(--violet-ink);display:flex;align-items:center;gap:7px;}
   .detail-toolbar .lbl svg{width:15px;height:15px;}
 
+  /* ---------- Apply form ---------- */
+  .apply{
+    background:var(--bg-soft);border-top:1px solid var(--line);
+    margin-top:80px;padding:66px 0 74px;scroll-margin-top:60px;
+  }
+  .apply-head{text-align:center;max-width:600px;margin:0 auto 34px;}
+  .apply-eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--violet);font-weight:600;margin:0 0 12px;
+  }
+  .apply-head h2{font-size:clamp(24px,3.4vw,30px);font-weight:800;letter-spacing:-.03em;margin:0 0 10px;}
+  .apply-head p{color:var(--ink-2);font-size:15px;margin:0;line-height:1.65;}
+  .apply-form{
+    max-width:720px;margin:0 auto;background:var(--white);border:1px solid var(--line);
+    border-radius:24px;padding:34px;box-shadow:var(--shadow);
+  }
+  .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;}
+  .field{display:flex;flex-direction:column;gap:7px;}
+  .field.wide{grid-column:1 / -1;}
+  .field>span{font-size:13px;font-weight:700;color:var(--ink-2);}
+  .field input{
+    font-family:inherit;font-size:15px;color:var(--ink);background:var(--bg-soft);
+    border:1px solid var(--line);border-radius:12px;padding:13px 15px;transition:.15s;width:100%;
+  }
+  .field input:focus{outline:none;background:#fff;border-color:var(--violet);box-shadow:0 0 0 3px var(--lav);}
+  .field input::placeholder{color:#b3aec7;}
+  .apply-submit{
+    width:100%;margin-top:26px;padding:16px;border:none;border-radius:999px;
+    background:var(--violet);color:#fff;font-family:inherit;font-weight:800;font-size:16px;cursor:pointer;
+    box-shadow:0 12px 30px rgba(107,78,255,.4);transition:transform .2s,box-shadow .2s,background .2s;
+  }
+  .apply-submit:hover{background:var(--violet-ink);transform:translateY(-2px);box-shadow:0 16px 36px rgba(107,78,255,.5);}
+  .apply-submit:active{transform:translateY(0);}
+  .apply-note{text-align:center;font-size:12.5px;color:var(--muted);margin:14px 0 0;}
+
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);margin-top:64px;}
   .ft{max-width:1120px;margin:0 auto;padding:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;}
@@ -340,9 +376,11 @@
     .pf-photo{max-width:240px;}
     .lec{grid-template-columns:1fr;}
     .bar-in{padding:12px 18px;}
-    .hero-inner{padding:0 18px 52px;}
+    .hero-inner{padding:28px 18px;}
     .hero-meta{gap:26px;}
     .wrap{padding:0 18px;}
+    .f-grid{grid-template-columns:1fr;}
+    .apply-form{padding:22px;}
     .brand .sub{display:none;}
   }
   @media (prefers-reduced-motion:reduce){
@@ -384,7 +422,7 @@
         <div class="stat"><span class="n">tooning.io</span><span class="l">AI 웹툰 제작 플랫폼</span></div>
         <div class="stat"><span class="n">ONE-TEAM</span><span class="l">제작사와 함께</span></div>
       </div>
-      <a class="hero-cta" href="https://tooning.io" target="_blank" rel="noopener">교원연수 신청하기</a>
+      <a class="hero-cta" href="#apply">교원연수 신청하기</a>
     </div>
     <div class="hero-cue">SCROLL</div>
   </section>
@@ -400,6 +438,28 @@
     <div class="sec-head"><h2>프로필</h2><span class="line"></span></div>
     <div class="detail" id="detail"></div>
   </div>
+
+  <section class="apply" id="apply">
+    <div class="wrap">
+      <div class="apply-head">
+        <p class="apply-eyebrow">APPLY</p>
+        <h2>교원연수 신청</h2>
+        <p>아래 정보를 남겨주시면 담당자가 일정 조율을 위해 연락드립니다.</p>
+      </div>
+      <form class="apply-form" id="applyForm" novalidate>
+        <div class="f-grid">
+          <label class="field"><span>신청자 성함</span><input name="name" type="text" required placeholder="홍길동" autocomplete="name"></label>
+          <label class="field"><span>학교명</span><input name="school" type="text" required placeholder="○○고등학교"></label>
+          <label class="field"><span>연락처</span><input name="phone" type="tel" required placeholder="010-0000-0000" autocomplete="tel"></label>
+          <label class="field"><span>이메일</span><input name="email" type="email" required placeholder="name@school.kr" autocomplete="email"></label>
+          <label class="field wide"><span>교원연수 일정 · 시간</span><input name="schedule" type="text" required placeholder="예) 7월 셋째 주 / 오후 2~5시"></label>
+          <label class="field"><span>연수 받을 선생님 수</span><input name="count" type="number" min="1" required placeholder="20"></label>
+        </div>
+        <button type="submit" class="apply-submit">신청서 보내기</button>
+        <p class="apply-note">‘신청서 보내기’를 누르면 메일 앱이 열립니다. 내용 확인 후 전송해 주세요.</p>
+      </form>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -970,6 +1030,28 @@ function toast(msg){
   t.textContent = msg; t.classList.add('show');
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
 }
+
+/* ---------- Apply form ---------- */
+const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — 변경하려면 이 값을 수정
+(function(){
+  const form = document.getElementById('applyForm');
+  if(!form) return;
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    const v = n => (form.elements[n].value || '').trim();
+    const subject = `[교원연수 신청] ${v('school')} · ${v('name')}`;
+    const body =
+      `■ 신청자 성함: ${v('name')}\n`+
+      `■ 학교명: ${v('school')}\n`+
+      `■ 연락처: ${v('phone')}\n`+
+      `■ 이메일: ${v('email')}\n`+
+      `■ 교원연수 일정·시간: ${v('schedule')}\n`+
+      `■ 연수 받을 선생님 수: ${v('count')}명\n`;
+    window.location.href = `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    toast('메일 앱에서 신청 내용을 확인 후 보내주세요');
+  });
+})();
 
 /* ---------- Header: transparent over hero, solid after scroll ---------- */
 const headerEl = document.querySelector('header.bar');
