@@ -117,12 +117,18 @@
   }
   .eyebrow{
     font-family:var(--mono);font-size:14px;letter-spacing:.2em;text-transform:uppercase;
-    color:rgba(255,255,255,.88);font-weight:600;margin:0 0 22px;
+    color:#c6b8ff;font-weight:600;margin:0 0 22px;
   }
   .hero h1{
     font-size:clamp(40px,6.4vw,78px);line-height:1.1;letter-spacing:-.035em;
     font-weight:800;margin:0 auto;max-width:18ch;word-break:keep-all;
     text-shadow:0 2px 30px rgba(0,0,0,.38);
+  }
+  .hero h1 .hl-accent{
+    background:linear-gradient(92deg,#c9bcff 0%,#a07cff 55%,#8f7bff 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 16px rgba(80,52,200,.45));
   }
   .hero h1 .hl{
     background:linear-gradient(180deg,transparent 60%,rgba(107,78,255,.6) 60%);
@@ -303,7 +309,10 @@
   }
   .tl-row.recent::before{background:var(--violet);box-shadow:0 0 0 4px var(--lav);}
   .tl-period{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:-.01em;}
-  .tl-role{font-size:15px;font-weight:600;color:var(--ink);margin-top:1px;}
+  .tl-role{font-size:15px;font-weight:600;color:var(--ink);margin-top:3px;line-height:1.5;}
+  .tl-row.multi{padding-bottom:22px;}
+  .tl-row.multi .tl-period{margin-bottom:3px;}
+  .tl-role+.tl-role{margin-top:9px;}
 
   /* lectures */
   .lec{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 22px;}
@@ -885,8 +894,11 @@ function renderHero(){
   if(state.editing){
     ti.textContent = m.heroTitle;
   }else{
-    // highlight last word group
-    ti.innerHTML = esc(m.heroTitle).replace(/\n/g,'<br>');
+    // accent-color the last line (point color, not all white)
+    const parts = esc(m.heroTitle).split('\n');
+    const last = parts.pop();
+    const head = parts.length ? parts.join('<br>') + '<br>' : '';
+    ti.innerHTML = head + '<span class="hl-accent">' + last + '</span>';
   }
   const si = document.getElementById('statInstructors');
   if(si) si.innerHTML = state.data.instructors.length + '<span class="u">명</span>';
@@ -957,8 +969,18 @@ function renderDetail(){
       '</div>'
     )).join('') + '</div><button class="add-row" id="addCareer">+ 경력 추가</button>';
   }else{
-    careerHtml = '<div class="tl">'+ (ins.career||[]).map((c,i)=>(
-      '<div class="tl-row'+(i===0?' recent':'')+'"><span class="tl-period">'+esc(c.period)+'</span><span class="tl-role">'+esc(c.role)+'</span></div>'
+    // group consecutive entries that share the same period (e.g. several "현재")
+    const groups = [];
+    (ins.career||[]).forEach(c=>{
+      const last = groups[groups.length-1];
+      if(last && last.period === c.period) last.roles.push(c.role);
+      else groups.push({ period:c.period, roles:[c.role] });
+    });
+    careerHtml = '<div class="tl">'+ groups.map((g,i)=>(
+      '<div class="tl-row'+(i===0?' recent':'')+(g.roles.length>1?' multi':'')+'">'+
+        '<span class="tl-period">'+esc(g.period)+'</span>'+
+        g.roles.map(r=>'<span class="tl-role">'+esc(r)+'</span>').join('')+
+      '</div>'
     )).join('') + '</div>';
   }
 
