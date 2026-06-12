@@ -109,7 +109,7 @@
   }
   .hero-inner{
     position:relative;z-index:2;width:100%;max-width:1120px;
-    margin:0 auto;padding:0 28px 72px;
+    margin:0 auto;padding:0 28px 72px;text-align:center;
   }
   .eyebrow{
     font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
@@ -117,7 +117,7 @@
   }
   .hero h1{
     font-size:clamp(32px,5vw,58px);line-height:1.12;letter-spacing:-.03em;
-    font-weight:800;margin:0;max-width:20ch;word-break:keep-all;
+    font-weight:800;margin:0 auto;max-width:20ch;word-break:keep-all;
     text-shadow:0 2px 30px rgba(0,0,0,.35);
   }
   .hero h1 .hl{
@@ -125,12 +125,24 @@
     padding:0 .06em;
   }
   .hero p.lead{
-    margin:22px 0 0;font-size:17px;color:rgba(255,255,255,.84);max-width:56ch;line-height:1.7;
+    margin:22px auto 0;font-size:17px;color:rgba(255,255,255,.84);max-width:56ch;line-height:1.7;
     text-shadow:0 1px 16px rgba(0,0,0,.3);
   }
   .hero-meta{
-    display:flex;gap:40px;margin-top:38px;flex-wrap:wrap;
+    display:flex;gap:40px;margin-top:38px;flex-wrap:wrap;justify-content:center;
   }
+  .hero-cta{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    margin-top:36px;padding:16px 36px;border-radius:999px;
+    background:var(--violet);color:#fff;font-weight:800;font-size:16px;letter-spacing:-.01em;
+    box-shadow:0 12px 32px rgba(107,78,255,.5);
+    transition:transform .2s,box-shadow .2s,background .2s;
+  }
+  .hero-cta:hover{
+    background:var(--violet-ink);transform:translateY(-2px);
+    box-shadow:0 18px 40px rgba(107,78,255,.6);
+  }
+  .hero-cta:active{transform:translateY(0);}
   .hero-meta .stat{display:flex;flex-direction:column;}
   .hero-meta .stat .n{font-size:26px;font-weight:800;letter-spacing:-.02em;}
   .hero-meta .stat .l{font-size:13px;color:rgba(255,255,255,.62);font-weight:600;margin-top:2px;}
@@ -372,6 +384,7 @@
         <div class="stat"><span class="n">tooning.io</span><span class="l">AI 웹툰 제작 플랫폼</span></div>
         <div class="stat"><span class="n">ONE-TEAM</span><span class="l">제작사와 함께</span></div>
       </div>
+      <a class="hero-cta" href="https://tooning.io" target="_blank" rel="noopener">교원연수 신청하기</a>
     </div>
     <div class="hero-cue">SCROLL</div>
   </section>
