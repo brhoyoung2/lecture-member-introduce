@@ -3,6 +3,10 @@
 *.jpg
 *.jpeg
 
+# ...except the optimized class-scene photos used by the marquee
+!class/
+!class/*.jpg
+
 # OS / editor
 .DS_Store
 Thumbs.db
