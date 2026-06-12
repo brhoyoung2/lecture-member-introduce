@@ -518,13 +518,28 @@
       <img src="class/c3.jpg" alt="강의 현장 3" data-i="2" draggable="false">
       <img src="class/c4.jpg" alt="강의 현장 4" data-i="3" draggable="false">
       <img src="class/c5.jpg" alt="강의 현장 5" data-i="4" draggable="false">
+      <img src="class/c6.jpg" alt="강의 현장 6" data-i="5" draggable="false">
+      <img src="class/c7.jpg" alt="강의 현장 7" data-i="6" draggable="false">
+      <img src="class/c8.jpg" alt="강의 현장 8" data-i="7" draggable="false">
+      <img src="class/c9.jpg" alt="강의 현장 9" data-i="8" draggable="false">
+      <img src="class/c10.jpg" alt="강의 현장 10" data-i="9" draggable="false">
+      <img src="class/c11.jpg" alt="강의 현장 11" data-i="10" draggable="false">
+      <img src="class/c12.jpg" alt="강의 현장 12" data-i="11" draggable="false">
+      <img src="class/c13.jpg" alt="강의 현장 13" data-i="12" draggable="false">
     </div></div>
     <div class="ps-row" id="psRow2"><div class="ps-track">
-      <img src="class/c5.jpg" alt="강의 현장 5" data-i="4" draggable="false">
-      <img src="class/c4.jpg" alt="강의 현장 4" data-i="3" draggable="false">
-      <img src="class/c3.jpg" alt="강의 현장 3" data-i="2" draggable="false">
-      <img src="class/c2.jpg" alt="강의 현장 2" data-i="1" draggable="false">
-      <img src="class/c1.jpg" alt="강의 현장 1" data-i="0" draggable="false">
+      <img src="class/c14.jpg" alt="강의 현장 14" data-i="13" draggable="false">
+      <img src="class/c15.jpg" alt="강의 현장 15" data-i="14" draggable="false">
+      <img src="class/c16.jpg" alt="강의 현장 16" data-i="15" draggable="false">
+      <img src="class/c17.jpg" alt="강의 현장 17" data-i="16" draggable="false">
+      <img src="class/c18.jpg" alt="강의 현장 18" data-i="17" draggable="false">
+      <img src="class/c19.jpg" alt="강의 현장 19" data-i="18" draggable="false">
+      <img src="class/c20.jpg" alt="강의 현장 20" data-i="19" draggable="false">
+      <img src="class/c21.jpg" alt="강의 현장 21" data-i="20" draggable="false">
+      <img src="class/c22.jpg" alt="강의 현장 22" data-i="21" draggable="false">
+      <img src="class/c23.jpg" alt="강의 현장 23" data-i="22" draggable="false">
+      <img src="class/c24.jpg" alt="강의 현장 24" data-i="23" draggable="false">
+      <img src="class/c25.jpg" alt="강의 현장 25" data-i="24" draggable="false">
     </div></div>
   </section>
 
@@ -1169,7 +1184,8 @@ const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — �
 (function(){
   var sec = document.getElementById('classStrip');
   if(!sec) return;
-  var GALLERY = ['class/l1.jpg','class/l2.jpg','class/l3.jpg','class/l4.jpg','class/l5.jpg'];
+  var GALLERY = [];
+  for(var gi=1; gi<=25; gi++) GALLERY.push('class/l'+gi+'.jpg');
   var r1 = document.getElementById('psRow1'), r2 = document.getElementById('psRow2');
   var track1 = r1 && r1.querySelector('.ps-track');
   var track2 = r2 && r2.querySelector('.ps-track');
