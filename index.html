@@ -459,36 +459,56 @@
   .reveal.in{opacity:1;transform:none;}
 
   /* ---------- Marketing sections ---------- */
-  .msec{padding:74px 0;}
+  .msec{padding:96px 0;}
   .msec.alt{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .sec-head2{text-align:center;max-width:660px;margin:0 auto 40px;}
-  .eyebrow2{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--violet);font-weight:600;margin:0 0 12px;}
-  .sec-head2 h2{font-size:clamp(25px,3.6vw,33px);font-weight:800;letter-spacing:-.03em;margin:0 0 12px;}
-  .sec-head2 p{color:var(--ink-2);font-size:15.5px;line-height:1.7;margin:0;}
-  .benefit-grid,.uc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-  .benefit{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
-  .benefit::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--violet),#9b6bff);}
-  .benefit h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0 0 9px;}
-  .benefit p{font-size:14px;color:var(--ink-2);line-height:1.65;margin:0;}
-  .uc{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px 24px;box-shadow:var(--shadow);}
-  .uc-badge{display:inline-block;font-size:13px;font-weight:800;color:#fff;background:var(--violet);padding:5px 15px;border-radius:999px;margin-bottom:16px;}
+  .sec-head2{text-align:center;max-width:660px;margin:0 auto 52px;}
+  .sec-head2 h2{font-size:clamp(26px,3.8vw,35px);font-weight:800;letter-spacing:-.03em;margin:0 0 14px;}
+  .sec-head2 p{color:var(--ink-2);font-size:16px;line-height:1.7;margin:0;}
+  .benefit-grid,.uc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .benefit{
+    background:var(--white);border:1px solid var(--line);border-radius:18px;padding:30px 28px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .benefit::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--violet),#9b6bff);transition:width .22s ease;}
+  .benefit:hover{transform:translateY(-5px);box-shadow:var(--shadow-lift);border-color:#d9d2f4;}
+  .benefit:hover::before{width:7px;}
+  .benefit h3{font-size:17.5px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;}
+  .benefit p{font-size:14px;color:var(--ink-2);line-height:1.68;margin:0;}
+  .uc{
+    background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .uc:hover{transform:translateY(-5px);box-shadow:var(--shadow-lift);border-color:#d9d2f4;}
+  .uc-img{height:178px;background:var(--lav-2);overflow:hidden;}
+  .uc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+  .uc:hover .uc-img img{transform:scale(1.07);}
+  .uc-body{padding:24px 26px 26px;}
+  .uc-badge{display:inline-block;font-size:13px;font-weight:800;color:#fff;background:var(--violet);padding:5px 16px;border-radius:999px;margin-bottom:18px;box-shadow:0 6px 14px rgba(107,78,255,.3);}
   .uc ul{margin:0;padding:0;list-style:none;}
-  .uc li{position:relative;padding-left:17px;font-size:14.5px;color:var(--ink);line-height:1.5;margin-bottom:11px;}
+  .uc li{position:relative;padding-left:18px;font-size:14.5px;color:var(--ink);line-height:1.5;margin-bottom:12px;}
   .uc li:last-child{margin-bottom:0;}
   .uc li::before{content:"";position:absolute;left:1px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--violet);}
-  .curri-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-  .step{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px 20px;box-shadow:var(--shadow);}
-  .step-n{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--violet);background:var(--lav);padding:4px 11px;border-radius:8px;}
-  .step h3{font-size:16px;font-weight:800;margin:15px 0 8px;letter-spacing:-.02em;}
+  .curri-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .step{
+    background:var(--white);border:1px solid var(--line);border-radius:18px;padding:28px 24px;box-shadow:var(--shadow);
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .step:hover{transform:translateY(-5px);box-shadow:var(--shadow-lift);border-color:#d9d2f4;}
+  .step-n{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--violet);background:var(--lav);padding:5px 12px;border-radius:8px;transition:background .2s,color .2s;}
+  .step:hover .step-n{background:var(--violet);color:#fff;}
+  .step h3{font-size:16px;font-weight:800;margin:16px 0 9px;letter-spacing:-.02em;}
   .step p{font-size:13.5px;color:var(--ink-2);line-height:1.62;margin:0;}
-  .curri-note{text-align:center;font-size:13px;color:var(--muted);margin:24px 0 0;}
-  .faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
-  .faq-item{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
-  .faq-item summary{list-style:none;cursor:pointer;padding:18px 22px;font-size:15.5px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:14px;}
+  .curri-note{text-align:center;font-size:13px;color:var(--muted);margin:30px 0 0;}
+  .faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+  .faq-item{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .18s ease,box-shadow .18s ease;}
+  .faq-item:hover{border-color:#d3caf2;box-shadow:var(--shadow);}
+  .faq-item summary{list-style:none;cursor:pointer;padding:20px 24px;font-size:15.5px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:14px;transition:color .15s;}
+  .faq-item summary:hover{color:var(--violet);}
   .faq-item summary::-webkit-details-marker{display:none;}
-  .faq-item summary::after{content:"+";font-size:21px;color:var(--violet);font-weight:600;transition:transform .2s;flex:none;}
+  .faq-item summary::after{content:"+";font-size:22px;color:var(--violet);font-weight:600;transition:transform .25s ease;flex:none;}
   .faq-item[open] summary::after{transform:rotate(45deg);}
-  .faq-a{padding:0 22px 18px;font-size:14.5px;color:var(--ink-2);line-height:1.72;}
+  .faq-a{padding:0 24px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.75;}
 
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);margin-top:64px;}
@@ -636,7 +656,6 @@
 
   <section class="photostrip" id="classStrip">
     <div class="ps-head">
-      <p class="ps-eyebrow">CLASS</p>
       <h2>강의 현장</h2>
     </div>
     <div class="ps-row" id="psRow1"><div class="ps-track">
@@ -673,12 +692,11 @@
   <section class="msec" id="benefits">
     <div class="wrap">
       <div class="sec-head2">
-        <p class="eyebrow2">WHY TOONING</p>
         <h2>선생님께 이런 점이 좋습니다</h2>
         <p>AI 웹툰 도구 tooning.io로, 준비 부담 없이 수업에 바로 쓰는 결과물을 만듭니다.</p>
       </div>
       <div class="benefit-grid">
-        <div class="benefit"><h3>코딩·그림 실력 0</h3><p>AI가 캐릭터와 장면을 그려줍니다. 디자인·코딩 경험이 없어도 첫 시간에 웹툰 한 편을 완성합니다.</p></div>
+        <div class="benefit"><h3>코딩·그림 몰라도 됩니다</h3><p>AI가 캐릭터와 장면을 대신 그려줍니다. 디자인·코딩 경험이 전혀 없어도 첫 시간에 웹툰 한 편을 완성합니다.</p></div>
         <div class="benefit"><h3>수업에 바로 쓰는 자료</h3><p>지도안·활동지·예시 템플릿을 함께 제공해, 배운 그날 교실에서 그대로 활용할 수 있습니다.</p></div>
         <div class="benefit"><h3>초·중·고 전 학년 활용</h3><p>국어·도덕·사회·진로·창체까지, 교과와 비교과 어디에나 자연스럽게 접목됩니다.</p></div>
         <div class="benefit"><h3>현직 작가·PD가 직접</h3><p>웹툰 PD·작가 강사진과 함께 tooning.io로 실습하며 만들어, 막히는 지점을 바로 해결합니다.</p></div>
@@ -691,37 +709,45 @@
   <section class="msec alt" id="usecases">
     <div class="wrap">
       <div class="sec-head2">
-        <p class="eyebrow2">USE CASES</p>
         <h2>학교급별 활용 예시</h2>
         <p>우리 학교, 우리 교실에서는 이렇게 씁니다.</p>
       </div>
       <div class="uc-grid">
         <div class="uc">
-          <span class="uc-badge">초등</span>
-          <ul>
-            <li>그림일기·동화책 만들기</li>
-            <li>우리 반 이야기 웹툰</li>
-            <li>안전·인성 교육 컷툰</li>
-            <li>발표·전시 활동 자료</li>
-          </ul>
+          <div class="uc-img"><img src="class/uc_elem.jpg" alt="초등 웹툰 수업" loading="lazy"></div>
+          <div class="uc-body">
+            <span class="uc-badge">초등</span>
+            <ul>
+              <li>그림일기·동화책 만들기</li>
+              <li>우리 반 이야기 웹툰</li>
+              <li>안전·인성 교육 컷툰</li>
+              <li>발표·전시 활동 자료</li>
+            </ul>
+          </div>
         </div>
         <div class="uc">
-          <span class="uc-badge">중등</span>
-          <ul>
-            <li>자유학기 웹툰 프로젝트</li>
-            <li>교과 내용 웹툰으로 정리</li>
-            <li>캠페인·UCC 활동 대체</li>
-            <li>동아리·자율활동</li>
-          </ul>
+          <div class="uc-img"><img src="class/uc_mid.jpg" alt="중등 웹툰 수업" loading="lazy"></div>
+          <div class="uc-body">
+            <span class="uc-badge">중등</span>
+            <ul>
+              <li>자유학기 웹툰 프로젝트</li>
+              <li>교과 내용 웹툰으로 정리</li>
+              <li>캠페인·UCC 활동 대체</li>
+              <li>동아리·자율활동</li>
+            </ul>
+          </div>
         </div>
         <div class="uc">
-          <span class="uc-badge">고등</span>
-          <ul>
-            <li>진로·세특 연계 작품</li>
-            <li>사회문제 캠페인 웹툰</li>
-            <li>포트폴리오·교내 대회</li>
-            <li>또래 멘토링 자료 제작</li>
-          </ul>
+          <div class="uc-img"><img src="class/uc_high.jpg" alt="고등 웹툰 수업" loading="lazy"></div>
+          <div class="uc-body">
+            <span class="uc-badge">고등</span>
+            <ul>
+              <li>진로·세특 연계 작품</li>
+              <li>사회문제 캠페인 웹툰</li>
+              <li>포트폴리오·교내 대회</li>
+              <li>또래 멘토링 자료 제작</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -730,7 +756,6 @@
   <section class="msec" id="curri">
     <div class="wrap">
       <div class="sec-head2">
-        <p class="eyebrow2">CURRICULUM</p>
         <h2>이렇게 진행됩니다</h2>
         <p>처음 만져 보는 선생님도 따라오면 완성되도록 설계했습니다.</p>
       </div>
@@ -757,7 +782,6 @@
   <section class="msec alt" id="faq">
     <div class="wrap">
       <div class="sec-head2">
-        <p class="eyebrow2">FAQ</p>
         <h2>자주 묻는 질문</h2>
       </div>
       <div class="faq-list">
@@ -775,7 +799,6 @@
   <section class="apply" id="apply">
     <div class="wrap">
       <div class="apply-head">
-        <p class="apply-eyebrow">APPLY</p>
         <h2>교원연수 신청</h2>
         <p>아래 정보를 남겨주시면 담당자가 일정 조율을 위해 연락드립니다.</p>
       </div>
