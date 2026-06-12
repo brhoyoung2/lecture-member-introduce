@@ -40,11 +40,25 @@
 
   /* ---------- Header ---------- */
   header.bar{
-    position:sticky;top:0;z-index:50;
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:transparent;border-bottom:1px solid transparent;
+    transition:background .3s,border-color .3s,box-shadow .3s;
+  }
+  header.bar.solid{
     background:rgba(255,255,255,.86);
     backdrop-filter:saturate(160%) blur(12px);
     border-bottom:1px solid var(--line);
   }
+  /* transparent header sitting over the hero video */
+  header.bar:not(.solid) .brand b,
+  header.bar:not(.solid) .brand .sub{color:#fff;}
+  header.bar:not(.solid) .brand .div{color:rgba(255,255,255,.38);}
+  header.bar:not(.solid) .btn{
+    color:#fff;border-color:rgba(255,255,255,.42);
+    background:rgba(255,255,255,.10);backdrop-filter:blur(6px);
+  }
+  header.bar:not(.solid) .btn:hover{background:rgba(255,255,255,.20);border-color:rgba(255,255,255,.7);}
+  header.bar:not(.solid) .btn.primary{background:var(--violet);border-color:var(--violet);}
   .bar-in{
     max-width:1120px;margin:0 auto;padding:14px 28px;
     display:flex;align-items:center;gap:14px;
@@ -74,34 +88,70 @@
   .btn.danger:hover{background:#fff3f5;border-color:#eeb9c4;}
   .btn svg{width:15px;height:15px;}
 
-  /* ---------- Hero ---------- */
-  .hero{max-width:1120px;margin:0 auto;padding:62px 28px 30px;}
+  /* ---------- Hero (full-screen video) ---------- */
+  .hero{
+    position:relative;min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    overflow:hidden;color:#fff;margin:0;max-width:none;
+  }
+  .hero-video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:0;background:#0c0a1c;
+  }
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,
+      rgba(12,10,28,.82) 0%,
+      rgba(12,10,28,.34) 20%,
+      rgba(12,10,28,0) 40%,
+      rgba(12,10,28,.52) 76%,
+      rgba(12,10,28,.94) 100%);
+  }
+  .hero-inner{
+    position:relative;z-index:2;width:100%;max-width:1120px;
+    margin:0 auto;padding:0 28px 72px;
+  }
   .eyebrow{
-    font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--violet);font-weight:600;margin:0 0 18px;
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(255,255,255,.86);font-weight:600;margin:0 0 18px;
   }
   .hero h1{
-    font-size:clamp(30px,4.6vw,52px);line-height:1.14;letter-spacing:-.03em;
+    font-size:clamp(32px,5vw,58px);line-height:1.12;letter-spacing:-.03em;
     font-weight:800;margin:0;max-width:20ch;word-break:keep-all;
+    text-shadow:0 2px 30px rgba(0,0,0,.35);
   }
   .hero h1 .hl{
-    background:linear-gradient(180deg,transparent 62%,var(--lav) 62%);
+    background:linear-gradient(180deg,transparent 60%,rgba(107,78,255,.6) 60%);
     padding:0 .06em;
   }
   .hero p.lead{
-    margin:22px 0 0;font-size:17px;color:var(--ink-2);max-width:56ch;line-height:1.7;
+    margin:22px 0 0;font-size:17px;color:rgba(255,255,255,.84);max-width:56ch;line-height:1.7;
+    text-shadow:0 1px 16px rgba(0,0,0,.3);
   }
   .hero-meta{
-    display:flex;gap:34px;margin-top:34px;flex-wrap:wrap;
+    display:flex;gap:40px;margin-top:38px;flex-wrap:wrap;
   }
   .hero-meta .stat{display:flex;flex-direction:column;}
   .hero-meta .stat .n{font-size:26px;font-weight:800;letter-spacing:-.02em;}
-  .hero-meta .stat .l{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px;}
-  .hero-meta .stat .n .u{font-size:15px;color:var(--violet);margin-left:2px;}
+  .hero-meta .stat .l{font-size:13px;color:rgba(255,255,255,.62);font-weight:600;margin-top:2px;}
+  .hero-meta .stat .n .u{font-size:15px;color:#b6a4ff;margin-left:2px;}
+  .hero-cue{
+    position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.28em;color:rgba(255,255,255,.6);
+  }
+  .hero-cue::after{
+    content:"";width:1px;height:36px;transform-origin:top;
+    background:linear-gradient(rgba(255,255,255,.7),transparent);
+    animation:cuePulse 2.1s ease-in-out infinite;
+  }
+  @keyframes cuePulse{0%,100%{opacity:.25;transform:scaleY(.6);}50%{opacity:1;transform:scaleY(1);}}
 
   /* ---------- Section ---------- */
   .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
-  .sec-head{display:flex;align-items:baseline;gap:14px;margin:46px 0 22px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:46px 0 22px;scroll-margin-top:84px;}
+  .wrap>.sec-head:first-of-type{margin-top:66px;}
+  #detail{scroll-margin-top:84px;}
   .sec-head h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin:0;}
   .sec-head .count{font-family:var(--mono);font-size:13px;color:var(--muted);}
   .sec-head .line{flex:1;height:1px;background:var(--line);}
@@ -278,7 +328,8 @@
     .pf-photo{max-width:240px;}
     .lec{grid-template-columns:1fr;}
     .bar-in{padding:12px 18px;}
-    .hero{padding:42px 18px 22px;}
+    .hero-inner{padding:0 18px 52px;}
+    .hero-meta{gap:26px;}
     .wrap{padding:0 18px;}
     .brand .sub{display:none;}
   }
@@ -310,14 +361,19 @@
 
 <main id="top">
   <section class="hero">
-    <p class="eyebrow" id="heroEyebrow"></p>
-    <h1 id="heroTitle"></h1>
-    <p class="lead" id="heroDesc"></p>
-    <div class="hero-meta">
-      <div class="stat"><span class="n" id="statInstructors">0<span class="u">명</span></span><span class="l">교원연수 강사</span></div>
-      <div class="stat"><span class="n">tooning.io</span><span class="l">AI 웹툰 제작 플랫폼</span></div>
-      <div class="stat"><span class="n">ONE-TEAM</span><span class="l">제작사와 함께</span></div>
+    <video class="hero-video" id="heroVideo" src="hero-bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <div class="hero-scrim"></div>
+    <div class="hero-inner">
+      <p class="eyebrow" id="heroEyebrow"></p>
+      <h1 id="heroTitle"></h1>
+      <p class="lead" id="heroDesc"></p>
+      <div class="hero-meta">
+        <div class="stat"><span class="n" id="statInstructors">0<span class="u">명</span></span><span class="l">교원연수 강사</span></div>
+        <div class="stat"><span class="n">tooning.io</span><span class="l">AI 웹툰 제작 플랫폼</span></div>
+        <div class="stat"><span class="n">ONE-TEAM</span><span class="l">제작사와 함께</span></div>
+      </div>
     </div>
+    <div class="hero-cue">SCROLL</div>
   </section>
 
   <div class="wrap">
@@ -902,9 +958,27 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
 }
 
+/* ---------- Header: transparent over hero, solid after scroll ---------- */
+const headerEl = document.querySelector('header.bar');
+function syncHeader(){
+  headerEl.classList.toggle('solid', window.scrollY > window.innerHeight * 0.72);
+}
+window.addEventListener('scroll', syncHeader, {passive:true});
+window.addEventListener('resize', syncHeader, {passive:true});
+
+/* ---------- Hero video: respect reduced-motion ---------- */
+(function(){
+  const v = document.getElementById('heroVideo');
+  if(!v) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    v.removeAttribute('autoplay'); v.pause();
+  }
+})();
+
 /* ---------- Init ---------- */
 document.getElementById('yr').textContent = new Date().getFullYear();
 render();
+syncHeader();
 </script>
 </body>
 </html>
