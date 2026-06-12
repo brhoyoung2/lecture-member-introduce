@@ -387,14 +387,16 @@
   }
   .field input:focus{outline:none;background:#fff;border-color:var(--violet);box-shadow:0 0 0 3px var(--lav);}
   .field input::placeholder{color:#b3aec7;}
+  .apply-actions{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:24px;flex-wrap:wrap;}
   .apply-submit{
-    width:100%;margin-top:26px;padding:16px;border:none;border-radius:999px;
-    background:var(--violet);color:#fff;font-family:inherit;font-weight:800;font-size:16px;cursor:pointer;
-    box-shadow:0 12px 30px rgba(107,78,255,.4);transition:transform .2s,box-shadow .2s,background .2s;
+    flex:none;margin:0;padding:13px 38px;border:none;border-radius:999px;
+    background:var(--violet);color:#fff;font-family:inherit;font-weight:800;font-size:15px;cursor:pointer;
+    box-shadow:0 10px 24px rgba(107,78,255,.38);transition:transform .2s,box-shadow .2s,background .2s;
   }
-  .apply-submit:hover{background:var(--violet-ink);transform:translateY(-2px);box-shadow:0 16px 36px rgba(107,78,255,.5);}
+  .apply-submit:hover{background:var(--violet-ink);transform:translateY(-2px);box-shadow:0 14px 30px rgba(107,78,255,.5);}
   .apply-submit:active{transform:translateY(0);}
-  .apply-note{text-align:center;font-size:12.5px;color:var(--muted);margin:14px 0 0;}
+  .apply-submit:disabled{opacity:.6;cursor:default;transform:none;}
+  .apply-note{flex:1 1 auto;min-width:0;text-align:left;font-size:12.5px;color:var(--muted);margin:0;}
   .apply-done{text-align:center;max-width:540px;margin:0 auto;padding:30px 0;}
   .apply-check{
     width:66px;height:66px;border-radius:50%;background:var(--violet);color:#fff;
@@ -538,7 +540,9 @@
     .apply-head h2{font-size:23px;}
     .apply-form{padding:20px;border-radius:20px;}
     .field input{padding:12px 13px;font-size:14.5px;}
-    .apply-submit{padding:15px;font-size:15px;}
+    .apply-actions{flex-direction:column;align-items:stretch;gap:12px;}
+    .apply-submit{padding:15px;font-size:15px;width:100%;order:-1;}
+    .apply-note{text-align:center;}
     .ft{flex-direction:column;align-items:flex-start;gap:6px;}
     .photostrip{padding:48px 0 6px;}
     .ps-track img{height:140px;border-radius:11px;}
@@ -655,8 +659,10 @@
           <label class="field"><span>교원연수 일정 · 시간</span><input name="schedule" type="text" required placeholder="예) 7월 셋째 주 / 오후 2~5시"></label>
           <label class="field"><span>연수 받을 선생님 수</span><input name="count" type="number" min="1" required placeholder="20"></label>
         </div>
-        <button type="submit" class="apply-submit">신청하기</button>
-        <p class="apply-note">제출하시면 담당자에게 바로 전달되며, 일정 조율을 위해 연락드립니다.</p>
+        <div class="apply-actions">
+          <p class="apply-note">제출하시면 담당자에게 바로 전달되며, 일정 조율을 위해 연락드립니다.</p>
+          <button type="submit" class="apply-submit">신청하기</button>
+        </div>
       </form>
     </div>
   </section>
