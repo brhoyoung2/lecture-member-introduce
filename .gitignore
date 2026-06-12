@@ -7,6 +7,10 @@
 !class/
 !class/*.jpg
 
+# ...and the site icons
+!apple-touch-icon.png
+!favicon-32.png
+
 # OS / editor
 .DS_Store
 Thumbs.db
