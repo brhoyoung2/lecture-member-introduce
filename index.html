@@ -396,6 +396,66 @@
   .apply-submit:hover{background:var(--violet-ink);transform:translateY(-2px);box-shadow:0 16px 36px rgba(107,78,255,.5);}
   .apply-submit:active{transform:translateY(0);}
   .apply-note{text-align:center;font-size:12.5px;color:var(--muted);margin:14px 0 0;}
+  .apply-done{text-align:center;max-width:540px;margin:0 auto;padding:30px 0;}
+  .apply-check{
+    width:66px;height:66px;border-radius:50%;background:var(--violet);color:#fff;
+    display:grid;place-items:center;font-size:32px;font-weight:700;margin:0 auto 20px;
+    box-shadow:0 14px 34px rgba(107,78,255,.45);animation:popIn .35s ease;
+  }
+  @keyframes popIn{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+  .apply-done h2{font-size:27px;font-weight:800;letter-spacing:-.03em;margin:0 0 12px;}
+  .apply-done p{color:var(--ink-2);font-size:15.5px;line-height:1.75;margin:0;}
+
+  /* ---------- Top nav ---------- */
+  .topnav{display:flex;gap:24px;margin-left:10px;}
+  .topnav a{font-size:14px;font-weight:600;color:var(--ink-2);transition:color .15s;}
+  .topnav a:hover{color:var(--violet);}
+  header.bar:not(.solid) .topnav a{color:rgba(255,255,255,.82);}
+  header.bar:not(.solid) .topnav a:hover{color:#fff;}
+  body.edit .nav-apply{display:none;}
+  .sec-hint{font-size:12.5px;color:var(--muted);margin-left:auto;align-self:center;}
+
+  /* ---------- Profile modal ---------- */
+  .pmodal{
+    position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;
+    padding:28px 76px;background:rgba(10,8,22,.72);backdrop-filter:blur(6px);opacity:0;transition:opacity .22s;
+  }
+  .pmodal.show{display:flex;opacity:1;}
+  .pmodal-card{
+    background:var(--white);border-radius:24px;max-width:920px;width:100%;max-height:88vh;
+    overflow:auto;box-shadow:0 30px 90px rgba(0,0,0,.45);animation:pmIn .26s ease;
+  }
+  @keyframes pmIn{0%{transform:translateY(14px) scale(.99);opacity:0}100%{transform:none;opacity:1}}
+  .pmodal-card .detail{margin:0;}
+  .pmodal-card .profile{border:none;box-shadow:none;border-radius:24px;}
+  .pmodal-card .pf-left{position:static;}
+  .pmodal-close{
+    position:fixed;top:18px;right:22px;width:44px;height:44px;border-radius:50%;border:none;
+    background:rgba(255,255,255,.16);color:#fff;font-size:24px;cursor:pointer;display:grid;place-items:center;transition:.15s;
+  }
+  .pmodal-close:hover{background:rgba(255,255,255,.3);}
+  .pmodal-nav{
+    position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.13);color:#fff;font-size:26px;
+    cursor:pointer;display:grid;place-items:center;transition:.15s;
+  }
+  .pmodal-nav:hover{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.6);}
+  .pmodal-prev{left:20px;} .pmodal-next{right:20px;}
+
+  /* ---------- To-top + last edited ---------- */
+  .to-top{
+    position:fixed;right:22px;bottom:24px;z-index:80;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
+    color:var(--ink);font-size:20px;cursor:pointer;box-shadow:var(--shadow);
+    opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;
+  }
+  .to-top.show{opacity:1;transform:none;pointer-events:auto;}
+  .to-top:hover{border-color:var(--violet);color:var(--violet);}
+  .ft-edited{display:block;margin-top:4px;color:var(--muted);font-size:12px;}
+
+  /* ---------- Section reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
 
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);margin-top:64px;}
@@ -447,9 +507,17 @@
     .apply{padding:54px 0 60px;margin-top:64px;}
     .apply-form{padding:24px;}
     .f-grid{grid-template-columns:1fr;}
+    .topnav{display:none;}
+    .sec-hint{display:none;}
+    .pmodal{padding:0;align-items:stretch;}
+    .pmodal-card{max-width:100%;max-height:100vh;height:100%;border-radius:0;}
+    .pmodal-nav{display:none;}
+    .pmodal-close{top:12px;right:14px;background:rgba(25,22,48,.5);}
   }
   /* ---------- Phone ---------- */
   @media (max-width:520px){
+    .nav-apply{padding:8px 13px;font-size:13px;}
+    .to-top{right:14px;bottom:16px;width:42px;height:42px;}
     .eyebrow{font-size:12px;letter-spacing:.16em;margin-bottom:16px;}
     .hero h1{font-size:36px;line-height:1.18;letter-spacing:-.03em;max-width:14ch;}
     .hero p.lead{font-size:16px;margin-top:18px;}
@@ -492,8 +560,14 @@
       <span class="div">|</span>
       <span class="sub">교원연수 강사진</span>
     </a>
+    <nav class="topnav">
+      <a href="#classStrip">강의 현장</a>
+      <a href="#rosterSec">강사진</a>
+      <a href="#apply">신청</a>
+    </nav>
     <span class="bar-spacer"></span>
-    <button class="btn" id="editToggle">
+    <a class="btn primary nav-apply" href="#apply">신청하기</a>
+    <button class="btn" id="editToggle" title="관리자 — 비밀번호로 내용 편집">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       수정
     </button>
@@ -552,16 +626,14 @@
     </div></div>
   </section>
 
-  <div class="wrap">
+  <div class="wrap" id="rosterSec">
     <div class="sec-head">
       <h2>강사진</h2>
       <span class="count" id="rosterCount"></span>
       <span class="line"></span>
+      <span class="sec-hint">카드를 누르면 프로필이 열립니다</span>
     </div>
     <div class="roster" id="roster"></div>
-
-    <div class="sec-head"><h2>프로필</h2><span class="line"></span></div>
-    <div class="detail" id="detail"></div>
   </div>
 
   <section class="apply" id="apply">
@@ -580,8 +652,8 @@
           <label class="field wide"><span>교원연수 일정 · 시간</span><input name="schedule" type="text" required placeholder="예) 7월 셋째 주 / 오후 2~5시"></label>
           <label class="field"><span>연수 받을 선생님 수</span><input name="count" type="number" min="1" required placeholder="20"></label>
         </div>
-        <button type="submit" class="apply-submit">신청서 보내기</button>
-        <p class="apply-note">‘신청서 보내기’를 누르면 메일 앱이 열립니다. 내용 확인 후 전송해 주세요.</p>
+        <button type="submit" class="apply-submit">신청하기</button>
+        <p class="apply-note">제출하시면 담당자에게 바로 전달되며, 일정 조율을 위해 연락드립니다.</p>
       </form>
     </div>
   </section>
@@ -589,10 +661,19 @@
 
 <footer>
   <div class="ft">
-    <span>© <span id="yr"></span> 툰스퀘어 · Tooning 교원연수</span>
+    <span>© <span id="yr"></span> 툰스퀘어 · Tooning 교원연수 <span class="ft-edited" id="lastEdited"></span></span>
     <span><a href="https://tooning.io" target="_blank" rel="noopener">tooning.io</a> · Stories Change the World.</span>
   </div>
 </footer>
+
+<div class="pmodal" id="profileModal" aria-hidden="true">
+  <button class="pmodal-close" id="pmClose" aria-label="닫기">&times;</button>
+  <button class="pmodal-nav pmodal-prev" id="pmPrev" aria-label="이전 강사">&#8249;</button>
+  <div class="pmodal-card"><div class="detail" id="detail"></div></div>
+  <button class="pmodal-nav pmodal-next" id="pmNext" aria-label="다음 강사">&#8250;</button>
+</div>
+
+<button class="to-top" id="toTop" aria-label="맨 위로">&#8593;</button>
 
 <div class="modal-bg" id="pwModal">
   <div class="modal">
@@ -850,6 +931,19 @@ function persist(){
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveRemote, 700);   // debounced shared save
 }
+let lastUpdatedAt = null;
+function fmtAgo(ts){
+  if(!ts) return '';
+  const s = Math.floor((Date.now() - new Date(ts).getTime())/1000);
+  if(s < 60) return '방금 전';
+  if(s < 3600) return Math.floor(s/60)+'분 전';
+  if(s < 86400) return Math.floor(s/3600)+'시간 전';
+  return Math.floor(s/86400)+'일 전';
+}
+function renderLastEdited(){
+  const el = document.getElementById('lastEdited');
+  if(el) el.textContent = lastUpdatedAt ? ('· 최종 수정 ' + fmtAgo(lastUpdatedAt)) : '';
+}
 async function saveRemote(){
   try{
     const res = await fetch(SB_REST, {
@@ -857,16 +951,20 @@ async function saveRemote(){
       headers: Object.assign({}, SB_HEADERS, {'Prefer':'resolution=merge-duplicates,return=minimal'}),
       body: JSON.stringify([{ id: SB_ROW, payload: state.data, updated_at: new Date().toISOString() }])
     });
-    if(res.ok && state.editing && sbReady) toast('저장됨 · 모두에게 공유됩니다');
+    if(res.ok){
+      lastUpdatedAt = new Date().toISOString(); renderLastEdited();
+      if(state.editing && sbReady) toast('저장됨 · 모두에게 공유됩니다');
+    }
   }catch(e){}
 }
 async function syncFromRemote(){
   try{
-    const res = await fetch(SB_REST + '?id=eq.' + SB_ROW + '&select=payload', { headers: SB_HEADERS });
+    const res = await fetch(SB_REST + '?id=eq.' + SB_ROW + '&select=payload,updated_at', { headers: SB_HEADERS });
     if(!res.ok) return;                                   // table not set up yet → keep local
     sbReady = true;
     const rows = await res.json();
     if(rows && rows[0] && rows[0].payload && rows[0].payload.instructors && rows[0].payload.instructors.length){
+      lastUpdatedAt = rows[0].updated_at; renderLastEdited();
       if(state.editing) return;                           // don't clobber an in-progress edit
       state.data = rows[0].payload;
       try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
@@ -921,7 +1019,7 @@ function renderRoster(){
       '<div class="body"><div class="nm">'+esc(ins.name||'이름 없음')+'</div>'+
       '<div class="rl">'+esc(ins.role||'')+'</div>'+
       '<div class="tags">'+tags+'</div></div>';
-    c.addEventListener('click', ()=>{ state.selectedId = ins.id; render(); document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'}); });
+    c.addEventListener('click', ()=>{ openProfile(ins.id); });
     r.appendChild(c);
   });
   if(state.editing){
@@ -1092,7 +1190,7 @@ function bindDetailEvents(ins){
     if(!confirm('"'+(ins.name||'이 강사')+'" 프로필을 삭제할까요?')) return;
     state.data.instructors = state.data.instructors.filter(x=>x.id!==ins.id);
     state.selectedId = state.data.instructors[0].id;
-    persist(); render(); toast('삭제되었습니다');
+    persist(); render(); closeProfile(); toast('삭제되었습니다');
   });
 }
 
@@ -1124,9 +1222,8 @@ function addInstructor(){
   const ins = { id:uid(), name:'', role:'', photo:'', tags:[], tagline:'Stories Change the World.',
     greeting:'', career:[{period:"'YY.MM – 현재", role:''}], lectures:[''] };
   state.data.instructors.push(ins);
-  state.selectedId = ins.id;
   persist(); render();
-  document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'});
+  openProfile(ins.id);
   toast('강사가 추가되었습니다 — 내용을 입력하세요');
 }
 
@@ -1151,6 +1248,49 @@ function render(){
   renderRoster();
   renderDetail();
 }
+
+/* ---------- Profile modal ---------- */
+const profileModal = document.getElementById('profileModal');
+function openProfile(id){
+  state.selectedId = id;
+  renderDetail();
+  profileModal.classList.add('show');
+  profileModal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  const card = profileModal.querySelector('.pmodal-card');
+  if(card) card.scrollTop = 0;
+}
+function closeProfile(){
+  profileModal.classList.remove('show');
+  profileModal.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+function profileStep(dir){
+  const list = state.data.instructors;
+  if(!list.length) return;
+  let idx = list.findIndex(i=>i.id===state.selectedId);
+  if(idx<0) idx = 0;
+  idx = (idx + dir + list.length) % list.length;
+  openProfile(list[idx].id);
+}
+document.getElementById('pmClose').addEventListener('click', closeProfile);
+document.getElementById('pmPrev').addEventListener('click', e=>{ e.stopPropagation(); profileStep(-1); });
+document.getElementById('pmNext').addEventListener('click', e=>{ e.stopPropagation(); profileStep(1); });
+profileModal.addEventListener('click', e=>{ if(e.target===profileModal) closeProfile(); });
+document.addEventListener('keydown', e=>{
+  if(!profileModal.classList.contains('show')) return;
+  if(e.key==='Escape') closeProfile();
+  else if(e.key==='ArrowRight' && !state.editing) profileStep(1);
+  else if(e.key==='ArrowLeft' && !state.editing) profileStep(-1);
+});
+// mobile swipe between instructors (skip while editing inputs)
+let pmTx=0, pmTy=0;
+profileModal.addEventListener('touchstart', e=>{ pmTx=e.changedTouches[0].clientX; pmTy=e.changedTouches[0].clientY; }, {passive:true});
+profileModal.addEventListener('touchend', e=>{
+  if(state.editing) return;
+  const dx=e.changedTouches[0].clientX-pmTx, dy=e.changedTouches[0].clientY-pmTy;
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.4){ if(dx<0) profileStep(1); else profileStep(-1); }
+}, {passive:true});
 
 /* ---------- Edit mode toggle / password ---------- */
 const pwModal = document.getElementById('pwModal');
@@ -1222,25 +1362,37 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
 }
 
-/* ---------- Apply form ---------- */
-const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — 변경하려면 이 값을 수정
+/* ---------- Apply form (submits to Supabase) ---------- */
+const SB_APPLY = SB_URL + '/rest/v1/' + encodeURIComponent('투닝교원연수_신청');
 (function(){
   const form = document.getElementById('applyForm');
   if(!form) return;
-  form.addEventListener('submit', e=>{
+  form.addEventListener('submit', async e=>{
     e.preventDefault();
     if(!form.checkValidity()){ form.reportValidity(); return; }
     const v = n => (form.elements[n].value || '').trim();
-    const subject = `[교원연수 신청] ${v('school')} · ${v('name')}`;
-    const body =
-      `■ 신청자 성함: ${v('name')}\n`+
-      `■ 학교명: ${v('school')}\n`+
-      `■ 연락처: ${v('phone')}\n`+
-      `■ 이메일: ${v('email')}\n`+
-      `■ 교원연수 일정·시간: ${v('schedule')}\n`+
-      `■ 연수 받을 선생님 수: ${v('count')}명\n`;
-    window.location.href = `mailto:${APPLY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast('메일 앱에서 신청 내용을 확인 후 보내주세요');
+    const payload = { name:v('name'), school:v('school'), phone:v('phone'), email:v('email'), schedule:v('schedule'), count:v('count') };
+    const btn = form.querySelector('.apply-submit');
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = '접수 중…';
+    try{
+      const res = await fetch(SB_APPLY, {
+        method:'POST',
+        headers: Object.assign({}, SB_HEADERS, {'Prefer':'return=minimal'}),
+        body: JSON.stringify([{ id:'app_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), payload, created_at:new Date().toISOString() }])
+      });
+      if(!res.ok) throw new Error('status '+res.status);
+      const wrap = document.querySelector('.apply .wrap');
+      wrap.innerHTML =
+        '<div class="apply-done">'+
+          '<div class="apply-check">&#10003;</div>'+
+          '<h2>신청이 접수되었습니다</h2>'+
+          '<p>'+esc(payload.school)+' · '+esc(payload.name)+'님, 감사합니다.<br>담당자가 일정 조율을 위해 곧 연락드리겠습니다.</p>'+
+        '</div>';
+    }catch(err){
+      btn.disabled = false; btn.textContent = label;
+      toast('전송에 실패했습니다. 잠시 후 다시 시도해 주세요');
+    }
   });
 })();
 
@@ -1338,11 +1490,24 @@ const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — �
 
 /* ---------- Header: transparent over hero, solid after scroll ---------- */
 const headerEl = document.querySelector('header.bar');
+const toTopBtn = document.getElementById('toTop');
 function syncHeader(){
   headerEl.classList.toggle('solid', window.scrollY > window.innerHeight * 0.72);
+  if(toTopBtn) toTopBtn.classList.toggle('show', window.scrollY > 700);
 }
 window.addEventListener('scroll', syncHeader, {passive:true});
 window.addEventListener('resize', syncHeader, {passive:true});
+if(toTopBtn) toTopBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ---------- Section reveal on scroll ---------- */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const targets = document.querySelectorAll('#classStrip, #rosterSec, #apply');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:0.08});
+  targets.forEach(t=>{ t.classList.add('reveal'); io.observe(t); });
+})();
 
 /* ---------- Hero video: respect reduced-motion ---------- */
 (function(){
@@ -1358,6 +1523,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 render();
 syncHeader();
 syncFromRemote();   // pull latest shared data from Supabase (then keep in sync)
+setInterval(renderLastEdited, 60000);   // keep "최종 수정 N분 전" fresh
 </script>
 </body>
 </html>
