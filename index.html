@@ -857,7 +857,7 @@ async function syncFromRemote(){
     if(!res.ok) return;                                   // table not set up yet → keep local
     sbReady = true;
     const rows = await res.json();
-    if(rows && rows[0] && rows[0].payload && rows[0].payload.instructors){
+    if(rows && rows[0] && rows[0].payload && rows[0].payload.instructors && rows[0].payload.instructors.length){
       if(state.editing) return;                           // don't clobber an in-progress edit
       state.data = rows[0].payload;
       try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
