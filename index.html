@@ -180,8 +180,44 @@
   .ps-track img{
     height:200px;width:auto;border-radius:14px;object-fit:cover;display:block;
     box-shadow:0 6px 20px rgba(25,22,48,.10);border:1px solid var(--line);
-    user-select:none;-webkit-user-drag:none;pointer-events:none;
+    user-select:none;-webkit-user-drag:none;cursor:pointer;transition:transform .2s,box-shadow .2s;
   }
+  .ps-track img:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(80,60,200,.18);}
+
+  /* ---------- Lightbox ---------- */
+  .lbox{
+    position:fixed;inset:0;z-index:120;display:none;
+    align-items:center;justify-content:center;padding:24px;
+    background:rgba(10,8,22,.86);backdrop-filter:blur(6px);
+    opacity:0;transition:opacity .22s;
+  }
+  .lbox.show{display:flex;opacity:1;}
+  .lbox-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:100%;}
+  .lbox-img{
+    width:auto;height:auto;max-width:66vw;max-height:72vh;object-fit:contain;
+    border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);background:#0c0a1c;
+    user-select:none;-webkit-user-drag:none;touch-action:pan-y;
+  }
+  .lbox-counter{
+    font-family:var(--mono);font-size:14px;letter-spacing:.08em;color:rgba(255,255,255,.9);
+    background:rgba(255,255,255,.12);padding:7px 16px;border-radius:999px;
+  }
+  .lbox-counter b{color:#fff;}
+  .lbox-close{
+    position:fixed;top:20px;right:22px;width:44px;height:44px;border-radius:50%;
+    border:none;background:rgba(255,255,255,.14);color:#fff;font-size:22px;cursor:pointer;
+    display:grid;place-items:center;transition:.15s;
+  }
+  .lbox-close:hover{background:rgba(255,255,255,.26);}
+  .lbox-nav{
+    position:fixed;top:50%;transform:translateY(-50%);
+    width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.12);color:#fff;font-size:24px;cursor:pointer;
+    display:grid;place-items:center;transition:.15s;
+  }
+  .lbox-nav:hover{background:rgba(255,255,255,.26);border-color:rgba(255,255,255,.6);}
+  .lbox-prev{left:22px;}
+  .lbox-next{right:22px;}
 
   /* ---------- Roster ---------- */
   .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:18px;}
@@ -425,6 +461,9 @@
     .ps-track img{height:140px;border-radius:11px;}
     .ps-track{gap:11px;}
     .ps-row+.ps-row{margin-top:11px;}
+    .lbox-nav{display:none;}
+    .lbox-img{max-width:92vw;max-height:74vh;}
+    .lbox{padding:16px;}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;scroll-behavior:auto!important;}
@@ -471,18 +510,18 @@
       <h2>강의 현장</h2>
     </div>
     <div class="ps-row" id="psRow1"><div class="ps-track">
-      <img src="class/c1.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c2.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c3.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c4.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c5.jpg" alt="강의 현장" loading="lazy">
+      <img src="class/c1.jpg" alt="강의 현장 1" data-i="0" draggable="false">
+      <img src="class/c2.jpg" alt="강의 현장 2" data-i="1" draggable="false">
+      <img src="class/c3.jpg" alt="강의 현장 3" data-i="2" draggable="false">
+      <img src="class/c4.jpg" alt="강의 현장 4" data-i="3" draggable="false">
+      <img src="class/c5.jpg" alt="강의 현장 5" data-i="4" draggable="false">
     </div></div>
     <div class="ps-row" id="psRow2"><div class="ps-track">
-      <img src="class/c5.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c4.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c3.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c2.jpg" alt="강의 현장" loading="lazy">
-      <img src="class/c1.jpg" alt="강의 현장" loading="lazy">
+      <img src="class/c5.jpg" alt="강의 현장 5" data-i="4" draggable="false">
+      <img src="class/c4.jpg" alt="강의 현장 4" data-i="3" draggable="false">
+      <img src="class/c3.jpg" alt="강의 현장 3" data-i="2" draggable="false">
+      <img src="class/c2.jpg" alt="강의 현장 2" data-i="1" draggable="false">
+      <img src="class/c1.jpg" alt="강의 현장 1" data-i="0" draggable="false">
     </div></div>
   </section>
 
@@ -540,6 +579,16 @@
       <button class="btn primary" id="pwOk">잠금 해제</button>
     </div>
   </div>
+</div>
+
+<div class="lbox" id="lbox" aria-hidden="true">
+  <button class="lbox-close" id="lboxClose" aria-label="닫기">&times;</button>
+  <button class="lbox-nav lbox-prev" id="lboxPrev" aria-label="이전">&#8249;</button>
+  <div class="lbox-stage">
+    <img class="lbox-img" id="lboxImg" src="" alt="강의 현장">
+    <div class="lbox-counter"><b id="lboxCur">1</b> / <span id="lboxTotal">5</span></div>
+  </div>
+  <button class="lbox-nav lbox-next" id="lboxNext" aria-label="다음">&#8250;</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1113,25 +1162,37 @@ const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — �
   });
 })();
 
-/* ---------- Photo strip marquee (top→left, bottom→right) ---------- */
+/* ---------- Photo strip marquee + lightbox ---------- */
 (function(){
   var sec = document.getElementById('classStrip');
   if(!sec) return;
+  var GALLERY = ['class/l1.jpg','class/l2.jpg','class/l3.jpg','class/l4.jpg','class/l5.jpg'];
   var r1 = document.getElementById('psRow1'), r2 = document.getElementById('psRow2');
   var track1 = r1 && r1.querySelector('.ps-track');
   var track2 = r2 && r2.querySelector('.ps-track');
   var BASE_SPEED = 0.55, HOVER_SPEED = 0.275;   // px/frame (slow); halves on hover
   var currentSpeed = BASE_SPEED, isHovered = false, initialized = false;
   var pos1 = 0, pos2 = 0;
-  function dup(t){ if(t) t.innerHTML += t.innerHTML; }        // duplicate for seamless loop
+
+  // Fill each track so one loop-unit is wider than the viewport, then duplicate
+  // it once for a seamless wrap — guarantees no blank gaps at any width.
+  function fill(track){
+    if(!track) return;
+    var base = Array.prototype.slice.call(track.children);
+    var guard = 0;
+    while(track.scrollWidth < window.innerWidth * 2.2 && guard < 60){
+      base.forEach(function(n){ track.appendChild(n.cloneNode(true)); });
+      guard++;
+    }
+    Array.prototype.slice.call(track.children).forEach(function(n){ track.appendChild(n.cloneNode(true)); });
+  }
   function init(){
-    dup(track1); dup(track2);
+    fill(track1); fill(track2);
     if(track2) pos2 = -(track2.scrollWidth / 4);
     initialized = true;
   }
   sec.addEventListener('mouseenter', function(){ isHovered = true; });
   sec.addEventListener('mouseleave', function(){ isHovered = false; });
-  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){ dup(track1); dup(track2); return; }
   function tick(){
     var target = isHovered ? HOVER_SPEED : BASE_SPEED;
     currentSpeed += (target - currentSpeed) * 0.06;
@@ -1149,8 +1210,47 @@ const APPLY_EMAIL = 'brhoyoung2@gmail.com'; // 신청서 수신 이메일 — �
     }
     requestAnimationFrame(tick);
   }
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   if(document.readyState === 'complete') init(); else window.addEventListener('load', init);
-  requestAnimationFrame(tick);
+  if(!reduce) requestAnimationFrame(tick);
+
+  /* ----- Lightbox ----- */
+  var lbox = document.getElementById('lbox');
+  var lboxImg = document.getElementById('lboxImg');
+  var lboxCur = document.getElementById('lboxCur');
+  var idx = 0;
+  document.getElementById('lboxTotal').textContent = GALLERY.length;
+  function show(i){
+    idx = (i + GALLERY.length) % GALLERY.length;
+    lboxImg.src = GALLERY[idx];
+    lboxCur.textContent = idx + 1;
+  }
+  function open(i){ show(i); lbox.classList.add('show'); lbox.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+  function close(){ lbox.classList.remove('show'); lbox.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+  function next(){ show(idx + 1); }
+  function prev(){ show(idx - 1); }
+
+  sec.addEventListener('click', function(e){
+    var img = e.target.closest('img[data-i]');
+    if(img) open(parseInt(img.getAttribute('data-i'), 10) || 0);
+  });
+  document.getElementById('lboxClose').addEventListener('click', close);
+  document.getElementById('lboxNext').addEventListener('click', function(e){ e.stopPropagation(); next(); });
+  document.getElementById('lboxPrev').addEventListener('click', function(e){ e.stopPropagation(); prev(); });
+  lbox.addEventListener('click', function(e){ if(e.target === lbox || e.target.classList.contains('lbox-stage')) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!lbox.classList.contains('show')) return;
+    if(e.key === 'Escape') close();
+    else if(e.key === 'ArrowRight') next();
+    else if(e.key === 'ArrowLeft') prev();
+  });
+  // mobile swipe
+  var tx = 0, ty = 0;
+  lbox.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY; }, {passive:true});
+  lbox.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){ if(dx < 0) next(); else prev(); }
+  }, {passive:true});
 })();
 
 /* ---------- Header: transparent over hero, solid after scroll ---------- */
